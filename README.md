@@ -1,2 +1,2 @@
 # kitchen-basebox
-Simple collection of formulas meant to form a system baseline
+test-kitchen driven collection of formulas meant to form a testable system baseline
