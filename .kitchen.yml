@@ -1,0 +1,65 @@
+# -*- coding: utf-8 -*-
+# vim: ft=yaml
+#
+---
+driver:
+  name: vagrant
+  customize:
+    memory: 1024
+
+provisioner:
+  name: salt_solo
+  # Allows us to reference our test.mockup states
+  is_file_root: true
+
+  # This keeps read-only bits from leaking in
+  salt_copy_filter:
+    - .kitchen
+    - .git
+    - .vagrant
+
+  # Formula Dependencies
+  dependencies:
+    # HavegeD
+    - name: haveged
+      repo: git
+      source: https://www.github.com/saltstack-formulas/haveged-formula.git
+    # SSH
+    - name: ssh
+      repo: git
+      source: https://www.github.com/saltstack-formulas/ssh-formula.git
+    # IPTables
+    - name: iptables
+      repo: git
+      source: https://www.github.com/saltstack-formulas/iptables-formula.git
+    # fail2ban
+    - name: fail2ban
+      repo: git
+      source: https://www.github.com/saltstack-formulas/fail2ban-formula.git
+    # Sysctl
+    - name: sysctl
+      repo: git
+      source: https://www.github.com/saltstack-formulas/sysctl-formula.git
+
+  # State Tree (/srv/salt/top.sls)
+  #
+  # test.mockup: A "shim" state containing quick hacks to work around
+  #              any unsupported behavior in your modules.
+  state_top:
+    base:
+      '*':
+        - test.mockup
+        - haveged
+        - ssh.server
+        - iptables
+        - fail2ban
+        - sysctl
+
+# What distributions are we supporting (Debian is what im used to)
+platforms:
+  - name: bento/debian-9
+
+
+suites:
+  # No pillar specified (Default state after formula application)
+  - name: default
