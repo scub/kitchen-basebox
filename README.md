@@ -29,19 +29,19 @@ The following tree is an attempt to describe the structure of the project
       |
       |_ mockup   # Contains one-off states
       |
-      |_ helpers  # These contain project-wide hooks for testing frameworks
-      |   |
-      |   |__ serverspec  # I've defaulted to using `busser-serverspec`, youre
-      |        |          # good here until busser-servspec loses support.
-      |        |
-      |        |_ Gemfile    # Contains environment specific pinning abilities,
-      |                      # an semi-reprieve from the Gem ecosystem.
       |
       |_ integration # Contains integration tests for the frameworks of your choice
           |          # Folders are nested using <suite-name>/<testing-framework>
           |
+          |_ helpers  # These contain project-wide hooks for testing frameworks
+          |   |
+          |   |__ serverspec  # I've defaulted to using `busser-serverspec`, youre
+          |        |          # good here until busser-servspec loses support.
+          |        |
+          |        |_ Gemfile    # Contains environment specific pinning abilities,
+          |                      # an semi-reprieve from the Gem ecosystem.
+          |
           |_ <suite-name>/serverspec # Example definition for using serverspec
-
 
 ```
 
@@ -62,6 +62,10 @@ kitchen-vagrant
 Provider specific gems can be utilized for creating live environments,
 I like `kitchen-linode` but there are a myriad of others.
 
+Recommmended gems:
+```
+kitchen-linode
+```
 
 
 ### Debugging and live hacking

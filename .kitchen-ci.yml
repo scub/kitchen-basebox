@@ -3,9 +3,7 @@
 #
 ---
 driver:
-  name: vagrant
-  customize:
-    memory: 1024
+  name: linode
 
 provisioner:
   name: salt_solo
@@ -36,6 +34,10 @@ provisioner:
     - name: fail2ban
       repo: git
       source: https://www.github.com/saltstack-formulas/fail2ban-formula.git
+    # Sysctl
+    - name: sysctl
+      repo: git
+      source: https://www.github.com/saltstack-formulas/sysctl-formula.git
 
   # State Tree (/srv/salt/top.sls)
   #
@@ -47,27 +49,31 @@ provisioner:
         - test.mockup
         - haveged
         - openssh
-        - openssh.config
         - iptables
         - fail2ban
+        - sysctl
 
 # What distributions are we supporting (Debian is what im used to)
 platforms:
-  - name: bento/debian-9
+  - name: stretch
+    # Overrides for non-vagrant drivers can be specified in this manner
+    driver:
+      image: 'Debian 9'
+      data_center: 'Newark'
+      flavor: 'Linode 2GB'
+      kernel: 'GRUB 2'
+
 
 suites:
-  # No pillar specified (Default state after formula application)
-  - name: default
-
   # Custom pillars are provided to (/srv/pillar)
   - name: custom
-    # By modifying our provisioner option for this suite
     provisioner:
       pillars-from-files:
         basebox.sls: pillars/basebox.sls
-      # Now we add them to our Pillar tree!
       pillars:
         top.sls:
           base:
             "*":
               - basebox
+
+
