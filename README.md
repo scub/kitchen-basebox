@@ -1,6 +1,8 @@
 # kitchen-basebox
 
-test-kitchen driven collection of formulas meant to form a testable system baseline
+test-kitchen driven collection of formulas meant to form a testable system baseline; huge
+shoutouts to all of the contributors over at https://github.com/saltstack-formulas who
+allowed this to come together so quickly!
 
 
 ### Project Layout
@@ -67,6 +69,36 @@ Recommmended gems:
 kitchen-linode
 ```
 
+### Adding more formulas to this environment
+
+
+#### Private formulas
+
+Currently the only means I can think of to provide private formulas behind auth gated barriers
+is by including them as submodules - the following should showcase the process:
+
+```
+$ git submodule add git@my.private.git:user/new_formula.git formulas/new-formula
+...
+
+# Inside .kitchen.yml
+ dependencies:
+   - name: new
+     path: ./formulas/new-formula
+```
+
+#### Public formulas
+
+Inside `provisioner:dependencies` of `kitchen.yml` or `kitchen-ci.yml` you can provide
+public formulas using the `repo: git` type as seen in both `kitchen.yml` and `kitchen-ci.yml`.
+
+```
+provisioner:
+  dependencies:
+    - name: new_formula
+      repo: git
+      source: https://www.github.com/user_or_org/new-formula.git
+```
 
 ### Debugging and live hacking
 
