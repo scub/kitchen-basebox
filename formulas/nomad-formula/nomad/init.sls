@@ -21,13 +21,6 @@
   service.disabled:
     - name: "rpcbind"
 
-
-### Install Nomad, Consul, Vault
-#https://releases.hashicorp.com/vault/1.1.3/vault_1.1.3_linux_amd64.zip
-#https://releases.hashicorp.com/nomad/0.9.3/nomad_0.9.3_linux_amd64.zip
-#https://releases.hashicorp.com/consul/1.5.1/consul_1.5.1_linux_amd64.zip
-
-
 # Needs jinja mapping / pillar controls
 "test.mockup.init: Download Nomad 0.9.3":
   file.managed:
@@ -68,9 +61,6 @@
 #  registry:2
 #
 
-# Install nginx - not sure
-# apt install nginx
-
 ## Copy an image from Docker Hub to your registry
 #
 # $ docker pull debian:9
@@ -79,6 +69,7 @@
 # module = main
 # callable = app
 # master = true
+
 
 # Clients
 # $ docker pull ubuntu:16.04

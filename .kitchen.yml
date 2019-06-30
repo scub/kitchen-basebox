@@ -57,7 +57,7 @@ platforms:
 
 suites:
   # No pillar specified (Default state after formula application)
-  - name: default
+  #- name: default
 
   # Custom pillars are provided to (/srv/pillar)
   - name: custom
@@ -65,9 +65,11 @@ suites:
     provisioner:
       pillars-from-files:
         basebox.sls: pillars/basebox.sls
+        nomad_server_client.sls: pillars/nomad_server_client.sls
       # Now we add them to our Pillar tree!
       pillars:
         top.sls:
           base:
             "*":
               - basebox
+              - nomad_server_client

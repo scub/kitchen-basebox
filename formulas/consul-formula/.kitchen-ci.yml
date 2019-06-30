@@ -1,0 +1,50 @@
+# vim: ft=yaml
+---
+driver:
+  name: linode
+
+provisioner:
+  name: salt_solo
+  is_file_root: true
+  state_top:
+    base:
+      "*":
+        - consul
+
+platforms:
+  - name: debian_stretch
+    driver:
+      image: "Debian 9"
+
+suites:
+  - name: server 
+    provisioner:
+      pillars_from_files:
+        consul.sls: pillar-server.sls
+      pillars:
+        top.sls:
+          base:
+            '*':
+              - consul
+
+
+  - name: client 
+    provisioner:
+      pillars_from_files:
+        consul.sls: pillar-client.sls
+      pillars:
+        top.sls:
+          base:
+            '*':
+              - consul
+
+    #- name: client
+    #- provisioner:
+    #-   pillars-from-files:
+    #-     consul.sls: pillar-client.sls
+    #-   pillars:
+    #-     top.sls:
+    #-       base:
+    #-         "*":
+    #-           - consul
+

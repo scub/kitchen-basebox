@@ -1,0 +1,6 @@
+consul:
+  enabled: True
+  server:
+    enabled: False
+  client:
+    enabled: False

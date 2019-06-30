@@ -1,0 +1,9 @@
+[Unit]
+Description=Consul Server
+After=network.target auditd.service
+
+[Service]
+ExecStart=/usr/local/bin/consul agent -config-file /etc/consul.d/server.json
+KillMode=process
+Restart=on-failure
+Type=notify
